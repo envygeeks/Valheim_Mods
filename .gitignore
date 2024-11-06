@@ -1,0 +1,14 @@
+# --
+# MacOS
+# --
+.DS_Store
+
+# --
+# Intellij
+# --
+.idea
+
+# --
+# Dotnet
+# --
+*.user
