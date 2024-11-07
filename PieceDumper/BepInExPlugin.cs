@@ -119,7 +119,7 @@ namespace PieceDumper
         private static void LogPiece(IPiece obj)
         {
             var internalName = obj.m_name;
-            var type = obj.GetType().ToString();
+            var type = obj.WrappedType().ToString();
             var name = obj.name;
 
             Log.LogDebug(

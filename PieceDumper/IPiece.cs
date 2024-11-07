@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /**
@@ -8,6 +9,7 @@ using UnityEngine;
 public interface IPiece
 {
     int GetInstanceID();
+    Type WrappedType();
     string m_name
     {
         get;
@@ -30,5 +32,6 @@ public class PieceWrapper<T> : IPiece where T : Component
     public PieceWrapper(T piece) => _piece = piece;
     public int GetInstanceID() => _piece.GetInstanceID();
     public string m_name => (string)_piece.GetType().GetField("m_name")?.GetValue(_piece);
+    public Type WrappedType() => _piece.GetType();
     public string name => _piece.name;
 }
