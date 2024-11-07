@@ -11,4 +11,8 @@
 # --
 # Dotnet
 # --
+*.zip
+*.pdb
 *.user
+*.dll
+obj/
