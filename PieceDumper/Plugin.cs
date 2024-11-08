@@ -122,7 +122,7 @@ namespace PieceDumper
 
         private static void LogPiece(Object obj)
         {
-            var m_name = GetFieldValueOf<string>(obj, "m_name");
+            var m_name = GetValueOf<string>(obj, "m_name");
             if (m_name != null)
             {
                 if (uniqueOnly.Value)

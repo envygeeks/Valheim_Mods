@@ -13,9 +13,10 @@ namespace ValheimUtils
          * it just makes life easier
          */
         [UsedImplicitly]
-        public static T GetFieldValueOf<T>(
-            Object obj, string field
-        ) {
+        public static T GetValueOf<T>(
+            System.Object obj, string field
+        )
+        {
             // The reality is, I just hate long str
             return (T)obj.GetType().GetField(field)?.
                 GetValue(
