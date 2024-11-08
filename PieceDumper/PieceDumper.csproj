@@ -3,4 +3,9 @@
     <PropertyGroup>
         <Version>0.1.0</Version>
     </PropertyGroup>
+    <ItemGroup>
+      <Compile Include="..\ValheimUtils\Unity.cs">
+        <Link>..\ValheimUtils\Unity.cs</Link>
+      </Compile>
+    </ItemGroup>
 </Project>

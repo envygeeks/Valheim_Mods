@@ -2,8 +2,9 @@
 // ReSharper disable CheckNamespace
 
 using HarmonyLib;
-using System.Reflection;
 using BepInEx.Configuration;
+using static ValheimUtils.Unity;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using BepInEx.Logging;
 using UnityEngine;
@@ -13,16 +14,16 @@ namespace PieceDumper
 {
     [
         BepInPlugin(
-            "EnvyGeeks.PieceDumper", "Piece Dumper", "0.1.0"
+            "EnvyGeeks.PieceDumper", "PieceDumper", "0.1.0"
         )
     ]
-    public class BepInExPlugin: BaseUnityPlugin
+    public class Plugin: BaseUnityPlugin
     {
         /**
          * Harmony
          * Provides a way for us to
          * conditionally patch everything
-         * so tha we don't create unecessary
+         * so tha we don't create unnecessary
          * patches and issues
          */
         private Harmony harmony;
@@ -32,12 +33,14 @@ namespace PieceDumper
          */
         private static ConfigEntry<bool> fireplaces;
         private static ConfigEntry<bool> cookingStations;
+        private static ConfigEntry<bool> uniqueOnly;
         private static ConfigEntry<bool> smelters;
         private static ConfigEntry<bool> pieces;
 
         /**
-         * Logger
+         * Internal
          */
+        private static readonly List<string> pieceCache = new List<string>();
         private static readonly ManualLogSource Log =
             BepInEx.Logging.Logger.CreateLogSource(
                 "PieceDumper"
@@ -48,6 +51,7 @@ namespace PieceDumper
             harmony = new Harmony("EnvyGeeks.PieceDumper");
             fireplaces = Config.Bind("General", "fireplaces", true, "");
             cookingStations = Config.Bind("General", "cooking_stations", true, "");
+            uniqueOnly = Config.Bind("General", "unique_only", true, "");
             smelters = Config.Bind("General", "smelters", true, "");
             pieces = Config.Bind("General", "pieces", false, "");
             ConditionallyPatch();
@@ -116,18 +120,28 @@ namespace PieceDumper
             }
         }
 
-        private static void LogPiece(IPiece obj)
+        private static void LogPiece(Object obj)
         {
-            var internalName = obj.m_name;
-            var type = obj.WrappedType().ToString();
-            var name = obj.name;
+            var m_name = GetFieldValueOf<string>(obj, "m_name");
+            if (m_name != null)
+            {
+                if (uniqueOnly.Value)
+                {
+                    if (pieceCache.Contains(m_name)) return;
+                    pieceCache.Add(
+                        m_name
+                    );
+                }
 
-            Log.LogDebug(
-                "Found piece\n" +
-                $"\tname: {name}\n" +
-                $"\tm_name: {internalName}\n" +
-                $"\ttype: {type}"
-            );
+                var type = obj.ToString();
+                var name = obj.name;
+                Log.LogDebug(
+                    "Found piece\n" +
+                    $"\tname: {name}\n" +
+                    $"\tm_name: {m_name}\n" +
+                    $"\ttype: {type}"
+                );
+            }
         }
 
         [HarmonyPatch]
@@ -139,9 +153,7 @@ namespace PieceDumper
                 if (pieces.Value)
                 {
                     LogPiece(
-                        new PieceWrapper<Piece>(
-                            __instance
-                        )
+                        __instance
                     );
                 }
             }
@@ -156,9 +168,7 @@ namespace PieceDumper
             ) {
                 if (fireplaces.Value) {
                     LogPiece(
-                        new PieceWrapper<Fireplace>(
-                            __instance
-                        )
+                        __instance
                     );
                 }
             }
@@ -174,9 +184,7 @@ namespace PieceDumper
                 if (cookingStations.Value)
                 {
                     LogPiece(
-                        new PieceWrapper<CookingStation>(
-                            __instance
-                        )
+                        __instance
                     );
                 }
             }
@@ -192,9 +200,7 @@ namespace PieceDumper
             ) {
                 if (smelters.Value) {
                     LogPiece(
-                        new PieceWrapper<Smelter>(
-                            __instance
-                        )
+                        __instance
                     );
                 }
             }
