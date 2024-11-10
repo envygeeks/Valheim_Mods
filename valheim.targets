@@ -13,6 +13,7 @@
         <DebugType>full</DebugType>
         <DebugSymbols>true</DebugSymbols>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <PortablePdb>false</PortablePdb>
         <OutputPath>bin\Debug\</OutputPath>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
@@ -21,6 +22,7 @@
 
     <PropertyGroup Condition="$(Configuration) == 'Release'">
         <DebugType>pdbonly</DebugType>
+        <PortablePdb>false</PortablePdb>
         <ErrorReport>prompt</ErrorReport>
         <DefineConstants>TRACE</DefineConstants>
         <OutputPath>bin\Release\</OutputPath>
@@ -255,9 +257,10 @@
             <Private>False</Private>
         </Reference>
     </ItemGroup>
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Target Name="BuildRelease" AfterTargets="PostBuildEvent">
         <ItemGroup>
-            <AllFiles Include="$(TargetDir)**\*.*" Exclude="$(TargetDir)**\*.pdb"/>
+            <AllFiles Include="$(TargetDir)**\*.*" Exclude="$(TargetDir)**\*.{pdb,mdb}" Condition="$(Configuration) == 'Release'"/>
+            <AllFiles Include="$(TargetDir)**\*.*" Exclude="$(TargetDir)**\*.pdb" Condition="$(Configuration) == 'Debug'"/>
         </ItemGroup>
 
         <Delete Files="$(ProjectDir)\bin\$(TargetName).zip" />
