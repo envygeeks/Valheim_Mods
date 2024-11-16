@@ -2,7 +2,7 @@
     <Import Project="$(SolutionDir)\valheim.targets"/>
     <PropertyGroup>
         <Version>0.1.0</Version>
-        <Configurations>Debug;Release;Dump</Configurations>
+        <Configurations>Debug;Release</Configurations>
         <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
     <ItemGroup>

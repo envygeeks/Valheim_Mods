@@ -271,7 +271,7 @@
     <Target Name="BuildRelease" AfterTargets="PostBuildEvent">
         <ItemGroup>
             <AllFiles Include="$(TargetDir)**\*.*" Exclude="$(TargetDir)**\*.{pdb,mdb}" Condition="$(Configuration) == 'Release'"/>
-            <AllFiles Include="$(TargetDir)**\*.*" Condition="$(Configuration) == 'Debug' OR '$(Configuration)' == 'Dump'"/>
+            <AllFiles Include="$(TargetDir)**\*.*" Condition="$(Configuration) == 'Debug'"/>
         </ItemGroup>
 
         <Delete Files="$(ProjectDir)\bin\$(TargetName).zip" />
