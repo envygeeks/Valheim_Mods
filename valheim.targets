@@ -12,10 +12,21 @@
     <PropertyGroup Condition="$(Configuration) == 'Debug'">
         <DebugType>full</DebugType>
         <DebugSymbols>true</DebugSymbols>
-        <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <PortablePdb>false</PortablePdb>
         <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
+        <PortablePdb>false</PortablePdb>
+        <WarningLevel>4</WarningLevel>
+        <Optimize>false</Optimize>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(Configuration) == 'Dump'">
+        <DebugType>full</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE;DUMP</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <PortablePdb>false</PortablePdb>
         <WarningLevel>4</WarningLevel>
         <Optimize>false</Optimize>
     </PropertyGroup>
@@ -73,7 +84,7 @@
         <StartAction>Program</StartAction>
         <StartArguments>-console</StartArguments>
         <StartProgram Condition="'$(OS)' == 'Windows_NT'">$(GamePath)\valheim.exe</StartProgram>
-        <StartProgram Condition="$(OS) == 'Unix' OR $(OS) == 'OSX'">$(SolutionDir)\valheim_macos.sh</StartProgram>
+        <StartProgram Condition="$(OS) == 'Unix' OR $(OS) == 'OSX'">$(SolutionDir)\macos_valheim.sh</StartProgram>
         <StartWorkingDirectory>$(GamePath)</StartWorkingDirectory>
     </PropertyGroup>
     <ItemGroup Label="BepInEx">
@@ -260,7 +271,7 @@
     <Target Name="BuildRelease" AfterTargets="PostBuildEvent">
         <ItemGroup>
             <AllFiles Include="$(TargetDir)**\*.*" Exclude="$(TargetDir)**\*.{pdb,mdb}" Condition="$(Configuration) == 'Release'"/>
-            <AllFiles Include="$(TargetDir)**\*.*" Exclude="$(TargetDir)**\*.pdb" Condition="$(Configuration) == 'Debug'"/>
+            <AllFiles Include="$(TargetDir)**\*.*" Condition="$(Configuration) == 'Debug' OR '$(Configuration)' == 'Dump'"/>
         </ItemGroup>
 
         <Delete Files="$(ProjectDir)\bin\$(TargetName).zip" />
