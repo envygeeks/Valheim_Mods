@@ -1,0 +1,2 @@
+[*.csproj]
+rider_disable_format_on_save=true

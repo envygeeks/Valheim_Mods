@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <Import Project="$(SolutionDir)\valheim.targets"/>
     <PropertyGroup>
-        <Version>1.0.0</Version>
+        <Version>0.1.0</Version>
+        <Configurations>Debug;Release;Dump</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
     <ItemGroup>
       <Folder Include="Properties\" />
