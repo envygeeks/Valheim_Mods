@@ -6,7 +6,8 @@
         <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="..\Aides\Valheim\Cache.cs" Link="Aides\Valheim\Cache.cs" />
+        <Compile Include="..\Aides\Valheim\Helpers.cs" Link="Aides\Valheim\Helpers.cs" />
         <Compile Include="..\Aides\Valheim\Utils\Unity.cs" Link="Aides\Valheim\Utils\Unity.cs" />
+        <Compile Include="..\Aides\Valheim\Cache.cs" Link="Aides\Valheim\Cache.cs" />
     </ItemGroup>
 </Project>
