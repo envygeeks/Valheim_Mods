@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="$(SolutionDir)\valheim.targets"/>
+    <PropertyGroup>
+        <Version>0.1.0</Version>
+        <Configurations>Debug;Release;Dump</Configurations>
+        <Platforms>AnyCPU</Platforms>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="..\Aides\Valheim\Cache.cs" Link="Aides\Valheim\Cache.cs" />
+        <Compile Include="..\Aides\Valheim\Utils\Unity.cs" Link="Aides\Valheim\Utils\Unity.cs" />
+    </ItemGroup>
+</Project>
